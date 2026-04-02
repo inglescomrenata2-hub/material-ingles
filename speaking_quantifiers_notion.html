@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speaking Practice — How Many Is Enough?</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #FFF8F2;
+    color: #1a1a1a;
+    min-height: 100vh;
+    padding: 2.5rem 1rem;
+  }
+
+  .page {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  .header {
+    margin-bottom: 2.5rem;
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 1.25rem;
+  }
+
+  .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C1440E;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    line-height: 1.15;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* Vocabulary box */
+  .vocab-box {
+    background: #1a1a1a;
+    color: #FFF8F2;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .vocab-box .vb-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #C1440E;
+    margin-bottom: 0.75rem;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    font-size: 12px;
+    padding: 4px 12px;
+    background: #2e2e2e;
+    border: 1px solid #444;
+    border-radius: 20px;
+    color: #f0e8df;
+    font-weight: 500;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 2rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+
+  .step-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: #C1440E;
+    line-height: 1;
+    min-width: 32px;
+  }
+
+  .step-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: #666;
+    margin-top: 2px;
+  }
+
+  /* Cards */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid #e0d8d0;
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    position: relative;
+  }
+
+  .card-situation {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+  }
+
+  .card-prompt {
+    font-size: 12px;
+    color: #777;
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .card-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #C1440E;
+    background: #FDEEE6;
+    padding: 2px 7px;
+    border-radius: 20px;
+  }
+
+  /* Prompts list */
+  .prompts-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .prompt-item {
+    background: #fff;
+    border: 1px solid #e0d8d0;
+    border-left: 3px solid #C1440E;
+    border-radius: 0 10px 10px 0;
+    padding: 0.75rem 1rem;
+    font-size: 13.5px;
+    color: #1a1a1a;
+    line-height: 1.6;
+  }
+
+  .prompt-item em {
+    color: #C1440E;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* Sentence starters */
+  .starters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .starter {
+    background: #FDEEE6;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    font-size: 13px;
+    color: #7a2a0a;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .starter span {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    color: #a05030;
+    margin-top: 2px;
+    font-style: italic;
+  }
+
+  /* Timer bar */
+  .timer-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid #e0d8d0;
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+  }
+
+  .timer-icon {
+    font-size: 18px;
+  }
+
+  .timer-text {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  .timer-text strong {
+    color: #1a1a1a;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0d8d0;
+    font-size: 11px;
+    color: #aaa;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 520px) {
+    .cards-grid, .starters { grid-template-columns: 1fr; }
+    h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="label">Speaking Practice · B1 · Quantifiers</div>
+    <h1>How many is enough?</h1>
+    <p class="subtitle">A fluency activity to practise quantifiers in real conversation. Work in pairs or answer the prompts out loud on your own.</p>
+  </div>
+
+  <!-- Vocab reminder -->
+  <div class="vocab-box">
+    <div class="vb-label">Quantifiers to use</div>
+    <div class="chips">
+      <span class="chip">too many</span>
+      <span class="chip">too little</span>
+      <span class="chip">too much</span>
+      <span class="chip">enough</span>
+      <span class="chip">not enough</span>
+      <span class="chip">a few</span>
+      <span class="chip">a little</span>
+      <span class="chip">several</span>
+      <span class="chip">hardly any</span>
+      <span class="chip">just enough</span>
+    </div>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">Pick a card and talk for 60 seconds</div>
+        <div class="step-desc">Choose any card below. Speak about that situation using as many quantifiers as you can.</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="card">
+        <div class="card-tag">personal</div>
+        <div class="card-situation">Your social life this month</div>
+        <div class="card-prompt">How many plans did you have? Did you see enough friends? Were there too many commitments?</div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">work</div>
+        <div class="card-situation">A project or task at work / study</div>
+        <div class="card-prompt">Did you have enough time? Too many people involved? Too little support?</div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">music</div>
+        <div class="card-situation">Your favourite band or artist</div>
+        <div class="card-prompt">How many albums do they have? Too many members or just enough? Enough recognition?</div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">learning</div>
+        <div class="card-situation">Your experience learning English</div>
+        <div class="card-prompt">Do you have enough practice? Too little speaking time? A few good resources or hardly any?</div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">city</div>
+        <div class="card-situation">Where you live</div>
+        <div class="card-prompt">Too many people? Enough green spaces? Too little quiet? Hardly any good options for something you need?</div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">tech</div>
+        <div class="card-situation">Your relationship with social media</div>
+        <div class="card-prompt">Too much scrolling? Hardly any real connection? Enough inspiration or too many distractions?</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">React to these statements — agree or disagree</div>
+        <div class="step-desc">Use quantifiers in your answer. Give a reason or a personal example.</div>
+      </div>
+    </div>
+    <ul class="prompts-list">
+      <li class="prompt-item">"There are <em>too many</em> streaming platforms today — it's hard to choose what to watch."</li>
+      <li class="prompt-item">"Most people don't spend <em>enough</em> time away from their phones."</li>
+      <li class="prompt-item">"In Brazil, there are <em>hardly any</em> opportunities for independent musicians to earn a good income."</li>
+      <li class="prompt-item">"Online courses give students <em>too little</em> human interaction to really learn well."</li>
+      <li class="prompt-item">"Big cities have <em>too many</em> people and <em>too little</em> community."</li>
+    </ul>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">Use these sentence starters</div>
+        <div class="step-desc">Continue each sentence with your own ideas. Speak for at least 2–3 sentences each.</div>
+      </div>
+    </div>
+    <div class="starters">
+      <div class="starter">In my opinion, there are too many…
+        <span>keep going — what problems does this cause?</span>
+      </div>
+      <div class="starter">I feel like I never have enough…
+        <span>why? what would change if you did?</span>
+      </div>
+      <div class="starter">Hardly any of my friends…
+        <span>is that a good or bad thing?</span>
+      </div>
+      <div class="starter">I've noticed that several…
+        <span>give a specific example or story</span>
+      </div>
+      <div class="starter">There's too little…in the world today.
+        <span>what would you do to change this?</span>
+      </div>
+      <div class="starter">I think just enough… is the key to…
+        <span>explain the balance you mean</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timing tip -->
+  <div class="timer-row">
+    <div class="timer-icon">⏱</div>
+    <div class="timer-text">
+      <strong>Suggested timing:</strong> Step 1 → 2 min per card · Step 2 → 1 min per statement · Step 3 → 1–2 min per starter. Total: approx. 20–25 min.
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>ESL Speaking · Quantifiers · B1</span>
+    <span>Based on ESL Brains — How many is enough?</span>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantifiers Exercises — B1</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #FFF8F2;
+    color: #1a1a1a;
+    min-height: 100vh;
+    padding: 2.5rem 1rem;
+  }
+
+  .page { max-width: 740px; margin: 0 auto; }
+
+  .header {
+    margin-bottom: 2.5rem;
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 1.25rem;
+  }
+
+  .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C1440E;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    line-height: 1.15;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* Tab navigation */
+  .tab-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1.5px solid #d0c8c0;
+    background: #fff;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .tab:hover { border-color: #C1440E; color: #C1440E; }
+
+  .tab.active {
+    background: #1a1a1a;
+    border-color: #1a1a1a;
+    color: #FFF8F2;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* Exercise card */
+  .ex-card {
+    background: #fff;
+    border: 1px solid #e0d8d0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .ex-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #1a1a1a;
+    margin-bottom: 0.25rem;
+  }
+
+  .ex-instruction {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+  }
+
+  /* Word bank */
+  .word-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 1.25rem;
+    padding: 0.85rem 1rem;
+    background: #FFF0E8;
+    border-radius: 8px;
+  }
+
+  .wchip {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 11px;
+    background: #fff;
+    border: 1px solid #e0c8b8;
+    border-radius: 20px;
+    color: #7a3010;
+  }
+
+  /* Items */
+  .item {
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 1.8;
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 0.5px solid #f0e8e0;
+  }
+
+  .item:last-of-type { border-bottom: none; margin-bottom: 0; }
+
+  .item em { color: #C1440E; font-style: italic; }
+  .item strong { font-weight: 600; }
+
+  /* Form controls */
+  select {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1.5px solid #d0c8c0;
+    background: #FFF8F2;
+    color: #1a1a1a;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  select:focus { border-color: #C1440E; }
+
+  input[type="text"] {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1.5px solid #d0c8c0;
+    background: #FFF8F2;
+    color: #1a1a1a;
+    outline: none;
+    transition: border-color 0.15s;
+    width: 160px;
+  }
+
+  input[type="text"].wide { width: 100%; margin-top: 6px; display: block; }
+  input[type="text"]:focus { border-color: #C1440E; }
+
+  /* Feedback states */
+  select.correct, input.correct { border-color: #2d7a2d; background: #EAF3DE; color: #1a4a1a; }
+  select.wrong, input.wrong { border-color: #C1440E; background: #FDEEE6; color: #7a1a1a; }
+
+  .inline-feedback {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 6px;
+  }
+
+  .inline-feedback.ok { background: #EAF3DE; color: #2d7a2d; }
+  .inline-feedback.no { background: #FDEEE6; color: #C1440E; }
+
+  /* Error hint */
+  .hint {
+    display: none;
+    font-size: 12px;
+    color: #7a3010;
+    background: #FFF0E8;
+    border-left: 3px solid #C1440E;
+    border-radius: 0 6px 6px 0;
+    padding: 6px 10px;
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  .hint.visible { display: block; }
+
+  /* Score bar */
+  .score-bar {
+    display: none;
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: #1a1a1a;
+    color: #FFF8F2;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .score-bar.visible { display: block; }
+
+  /* Button */
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1.5px solid #1a1a1a;
+    background: #fff;
+    color: #1a1a1a;
+    cursor: pointer;
+    margin-top: 1.25rem;
+    transition: all 0.15s;
+  }
+
+  .btn:hover { background: #1a1a1a; color: #FFF8F2; }
+
+  .btn-reset {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid #d0c8c0;
+    background: transparent;
+    color: #888;
+    cursor: pointer;
+    margin-top: 1.25rem;
+    margin-left: 8px;
+    transition: all 0.15s;
+  }
+
+  .btn-reset:hover { color: #C1440E; border-color: #C1440E; }
+
+  /* Ex 3 special */
+  .free-item {
+    background: #FFF8F2;
+    border: 1px solid #e0d8d0;
+    border-left: 3px solid #C1440E;
+    border-radius: 0 8px 8px 0;
+    padding: 0.75rem 1rem;
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+
+  .free-item strong { color: #C1440E; }
+
+  /* Footer */
+  .footer {
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0d8d0;
+    font-size: 11px;
+    color: #bbb;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 520px) {
+    h1 { font-size: 1.8rem; }
+    input[type="text"] { width: 100%; margin-top: 4px; display: block; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="label">Written Practice · B1 · Quantifiers</div>
+    <h1>How many is enough?</h1>
+    <p class="subtitle">Four exercises to practise quantifiers — multiple choice, error correction, free writing and translation.</p>
+  </div>
+
+  <div class="tab-row">
+    <div class="tab active" onclick="switchTab('ex1')">Exercise 1</div>
+    <div class="tab" onclick="switchTab('ex2')">Exercise 2</div>
+    <div class="tab" onclick="switchTab('ex3')">Exercise 3</div>
+    <div class="tab" onclick="switchTab('ex4')">Exercise 4</div>
+  </div>
+
+  <!-- ===================== EX 1 ===================== -->
+  <div class="panel active" id="panel-ex1">
+    <div class="ex-card">
+      <div class="ex-title">Exercise 1 — Choose the correct quantifier</div>
+      <div class="ex-instruction">Select the best option to complete each sentence. Pay attention to whether the noun is countable or uncountable.</div>
+
+      <div class="word-bank">
+        <span class="wchip">too many</span>
+        <span class="wchip">too little</span>
+        <span class="wchip">a few</span>
+        <span class="wchip">enough</span>
+        <span class="wchip">hardly any</span>
+        <span class="wchip">several</span>
+        <span class="wchip">just enough</span>
+        <span class="wchip">a little</span>
+      </div>
+
+      <div class="item">
+        1. We had
+        <select id="q1">
+          <option value="">--</option>
+          <option>too many</option>
+          <option>too little</option>
+          <option>a few</option>
+          <option>enough</option>
+        </select>
+        guests at the show — there were <em>hundreds</em> of people and it was impossible to move.
+      </div>
+
+      <div class="item">
+        2. I had
+        <select id="q2">
+          <option value="">--</option>
+          <option>hardly any</option>
+          <option>several</option>
+          <option>too many</option>
+          <option>enough</option>
+        </select>
+        sleep last night — maybe two hours. I'm exhausted.
+      </div>
+
+      <div class="item">
+        3. The band has recorded
+        <select id="q3">
+          <option value="">--</option>
+          <option>a little</option>
+          <option>several</option>
+          <option>too little</option>
+          <option>hardly any</option>
+        </select>
+        albums over the past decade — I think four or five.
+      </div>
+
+      <div class="item">
+        4. There were
+        <select id="q4">
+          <option value="">--</option>
+          <option>just enough</option>
+          <option>too many</option>
+          <option>a little</option>
+          <option>several</option>
+        </select>
+        chairs for everyone — exactly ten people, exactly ten chairs.
+      </div>
+
+      <div class="item">
+        5. She has
+        <select id="q5">
+          <option value="">--</option>
+          <option>a few</option>
+          <option>too many</option>
+          <option>enough</option>
+          <option>hardly any</option>
+        </select>
+        experience in music production, so she still needs to learn a lot.
+      </div>
+
+      <button class="btn" onclick="checkEx1()">Check answers</button>
+      <button class="btn-reset" onclick="resetEx1()">Reset</button>
+      <div class="score-bar" id="score1"></div>
+    </div>
+  </div>
+
+  <!-- ===================== EX 2 ===================== -->
+  <div class="panel" id="panel-ex2">
+    <div class="ex-card">
+      <div class="ex-title">Exercise 2 — Find and correct the mistake</div>
+      <div class="ex-instruction">Each sentence has ONE mistake with a quantifier. The wrong word is in italics. Type the correct word in the box.</div>
+
+      <div class="item">
+        1. We don't have <em>many</em> time — the recording session starts in five minutes.<br>
+        <input type="text" id="e1" placeholder="correct word">
+        <span id="e1r"></span>
+        <div class="hint" id="e1h">"Time" is uncountable → use <strong>much</strong>, not <em>many</em>. We use <em>many</em> only with countable nouns.</div>
+      </div>
+
+      <div class="item">
+        2. There were <em>a little</em> musicians at the festival — at least thirty bands.<br>
+        <input type="text" id="e2" placeholder="correct word">
+        <span id="e2r"></span>
+        <div class="hint" id="e2h">"Musicians" is countable (plural) → use <strong>a few</strong>, not <em>a little</em>. We use <em>a little</em> only with uncountable nouns.</div>
+      </div>
+
+      <div class="item">
+        3. <em>Hardly some</em> people came to the open mic night — it was really disappointing.<br>
+        <input type="text" id="e3" placeholder="correct phrase">
+        <span id="e3r"></span>
+        <div class="hint" id="e3h">The correct collocation is <strong>hardly any</strong>. "Hardly some" doesn't exist in English.</div>
+      </div>
+
+      <div class="item">
+        4. The producer has <em>too much</em> ideas — we need to focus on just a few.<br>
+        <input type="text" id="e4" placeholder="correct word">
+        <span id="e4r"></span>
+        <div class="hint" id="e4h">"Ideas" is countable → use <strong>too many</strong>, not <em>too much</em>. We use <em>too much</em> only with uncountable nouns.</div>
+      </div>
+
+      <button class="btn" onclick="checkEx2()">Check answers</button>
+      <button class="btn-reset" onclick="resetEx2()">Reset</button>
+      <div class="score-bar" id="score2"></div>
+    </div>
+  </div>
+
+  <!-- ===================== EX 3 ===================== -->
+  <div class="panel" id="panel-ex3">
+    <div class="ex-card">
+      <div class="ex-title">Exercise 3 — Complete the sentences</div>
+      <div class="ex-instruction">Finish each sentence in your own words. The quantifier is given in bold. There's no single correct answer — focus on using the quantifier correctly and write something true for you!</div>
+
+      <div class="free-item">1. I have <strong>too many</strong> _____________________ in my life right now.</div>
+      <div class="free-item">2. There are <strong>hardly any</strong> _____________________ in my neighbourhood.</div>
+      <div class="free-item">3. I never have <strong>enough</strong> _____________________ to _____________________.</div>
+      <div class="free-item">4. I know <strong>a few</strong> people who _____________________.</div>
+      <div class="free-item">5. <strong>Several</strong> of my _____________________ recently _____________________.</div>
+      <div class="free-item">6. There's <strong>too little</strong> _____________________ in the music industry today.</div>
+
+      <p style="font-size:13px; color:#888; margin-top:1rem; line-height:1.6;">
+        ✏️ Write your answers in your notebook or share them with your teacher for feedback.
+      </p>
+    </div>
+  </div>
+
+  <!-- ===================== EX 4 ===================== -->
+  <div class="panel" id="panel-ex4">
+    <div class="ex-card">
+      <div class="ex-title">Exercise 4 — Translation challenge</div>
+      <div class="ex-instruction">Translate the sentences from Portuguese into English. Use the quantifier shown in parentheses. More than one correct answer may be possible.</div>
+
+      <div class="item">
+        1. Eu tenho poucos alunos esta semana. (<strong>a few</strong>)<br>
+        <input type="text" id="t1" class="wide" placeholder="your answer in English">
+        <span id="t1r"></span>
+      </div>
+
+      <div class="item">
+        2. Quase ninguém apareceu para o workshop. (<strong>hardly any</strong>)<br>
+        <input type="text" id="t2" class="wide" placeholder="your answer in English">
+        <span id="t2r"></span>
+      </div>
+
+      <div class="item">
+        3. Não temos tempo suficiente para terminar o curso. (<strong>enough</strong>)<br>
+        <input type="text" id="t3" class="wide" placeholder="your answer in English">
+        <span id="t3r"></span>
+      </div>
+
+      <div class="item">
+        4. Há músicos demais tentando a mesma coisa. (<strong>too many</strong>)<br>
+        <input type="text" id="t4" class="wide" placeholder="your answer in English">
+        <span id="t4r"></span>
+      </div>
+
+      <button class="btn" onclick="checkEx4()">Check answers</button>
+      <button class="btn-reset" onclick="resetEx4()">Reset</button>
+      <div class="score-bar" id="score4"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>ESL Written Practice · Quantifiers · B1</span>
+    <span>Based on ESL Brains — How many is enough?</span>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(id) {
+    const tabs = ['ex1','ex2','ex3','ex4'];
+    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', tabs[i] === id));
+    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
+  }
+
+  /* ---- EX 1 ---- */
+  function checkEx1() {
+    const answers = { q1:'too many', q2:'too little', q3:'several', q4:'just enough', q5:'hardly any' };
+    let score = 0;
+    for (const [id, ans] of Object.entries(answers)) {
+      const el = document.getElementById(id);
+      el.classList.remove('correct','wrong');
+      if (el.value === ans) { score++; el.classList.add('correct'); }
+      else if (el.value !== '') { el.classList.add('wrong'); }
+    }
+    const bar = document.getElementById('score1');
+    bar.textContent = 'Score: ' + score + '/5 — ' + (score === 5 ? 'Perfect! Well done.' : score >= 3 ? 'Good job! Review the ones you missed.' : 'Keep going — check the word bank and try again.');
+    bar.classList.add('visible');
+  }
+
+  function resetEx1() {
+    ['q1','q2','q3','q4','q5'].forEach(id => { const el = document.getElementById(id); el.value=''; el.classList.remove('correct','wrong'); });
+    const bar = document.getElementById('score1'); bar.classList.remove('visible'); bar.textContent='';
+  }
+
+  /* ---- EX 2 ---- */
+  function checkEx2() {
+    const answers = { e1:'much', e2:'a few', e3:'hardly any', e4:'too many' };
+    let score = 0;
+    for (const [id, ans] of Object.entries(answers)) {
+      const el = document.getElementById(id);
+      const res = document.getElementById(id + 'r');
+      const hint = document.getElementById(id + 'h');
+      const val = el.value.trim().toLowerCase();
+      el.classList.remove('correct','wrong');
+      res.innerHTML = '';
+      hint.classList.remove('visible');
+      if (val === ans) {
+        score++;
+        el.classList.add('correct');
+        res.innerHTML = '<span class="inline-feedback ok">✓ correct</span>';
+      } else if (val !== '') {
+        el.classList.add('wrong');
+        res.innerHTML = '<span class="inline-feedback no">✗ try again</span>';
+        hint.classList.add('visible');
+      }
+    }
+    const bar = document.getElementById('score2');
+    bar.textContent = 'Score: ' + score + '/4 — ' + (score === 4 ? 'Excellent! All correct.' : 'Check the hints below the wrong answers.');
+    bar.classList.add('visible');
+  }
+
+  function resetEx2() {
+    ['e1','e2','e3','e4'].forEach(id => {
+      const el = document.getElementById(id); el.value=''; el.classList.remove('correct','wrong');
+      document.getElementById(id+'r').innerHTML='';
+      document.getElementById(id+'h').classList.remove('visible');
+    });
+    const bar = document.getElementById('score2'); bar.classList.remove('visible'); bar.textContent='';
+  }
+
+  /* ---- EX 4 ---- */
+  function norm(s) { return s.trim().toLowerCase().replace(/[.,!?]$/,''); }
+
+  const ex4Answers = {
+    t1: ['i have a few students this week','i have a few students this week'],
+    t2: ['hardly any people came to the workshop','hardly anyone came to the workshop','hardly any people showed up to the workshop','hardly any people showed up for the workshop','hardly any people turned up to the workshop'],
+    t3: ["we don't have enough time to finish the course","we do not have enough time to finish the course","we don't have enough time to complete the course","there isn't enough time to finish the course"],
+    t4: ['there are too many musicians trying the same thing','there are too many musicians doing the same thing','too many musicians are trying the same thing']
+  };
+
+  function checkEx4() {
+    let score = 0;
+    for (const [id, possibles] of Object.entries(ex4Answers)) {
+      const el = document.getElementById(id);
+      const res = document.getElementById(id + 'r');
+      const val = norm(el.value);
+      el.classList.remove('correct','wrong');
+      res.innerHTML = '';
+      if (val === '') continue;
+      const matched = possibles.some(p => norm(p) === val);
+      if (matched) {
+        score++;
+        el.classList.add('correct');
+        res.innerHTML = '<span class="inline-feedback ok">✓</span>';
+      } else {
+        el.classList.add('wrong');
+        res.innerHTML = '<span class="inline-feedback no">✗ check phrasing</span>';
+      }
+    }
+    const bar = document.getElementById('score4');
+    bar.textContent = 'Score: ' + score + '/4 — ' + (score === 4 ? 'Perfect translation!' : 'Some answers may have minor differences — show your teacher for feedback.');
+    bar.classList.add('visible');
+  }
+
+  function resetEx4() {
+    ['t1','t2','t3','t4'].forEach(id => {
+      const el = document.getElementById(id); el.value=''; el.classList.remove('correct','wrong');
+      document.getElementById(id+'r').innerHTML='';
+    });
+    const bar = document.getElementById('score4'); bar.classList.remove('visible'); bar.textContent='';
+  }
+</script>
+</body>
+</html>
